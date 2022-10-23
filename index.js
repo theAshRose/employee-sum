@@ -1,7 +1,9 @@
 const inquirer = require("inquirer")
-// import inquirer from "require"
-const getEmployeeData = require("./employees/employee.js")
-const fs = require("fs")
+const fs = require("fs");
+const Employees = require("./employees/employee.js")
+const Manager = require("./employees/manager.js");
+const Engineer = require("./employees/engineer.js");
+const Intern = require("./employees/intern.js")
 
 const managerQuestions = [{
     name: "name",
@@ -49,27 +51,87 @@ const engineerQuestions = [{
     choices: ["add engineer", "add intern", "skip both and finish building my team",]
 },]
 
+const internQuestions = [{
+    name: "name",
+    message: "Enter the intern's name",
+    type: "input"
+}, {
+    name: "id",
+    message: "Intern's employee ID?",
+    type: "input"
+}, {
+    name: "email",
+    message: "Intern's email address?",
+    type: "input"
+}, {
+    name: "school",
+    message: "Intern's school?",
+    type: "input"
+}, {
+    name: "employeeChoice",
+    message: "who else is on board?",
+    type: "list",
+    choices: ["add engineer", "add intern", "skip both and finish building my team",]
+},]
+
 const employeeAnswerArray = [];
 
-function init(){
-inquirer.prompt(managerQuestions).then(response =>{
-    console.log(managerQuestions); console.log(response)
-    const managerObj = new manager(response.name, response.id, 
-        response.email, response.officeNumber, response.employeeChoice);
-        if(managerObj[4] === "add engineer") {
-            engineerPrompt = function(){
-                inquirer.prompt(engineerQuestions).then(response => {
+function init() {
+    inquirer.prompt(managerQuestions).then(function(response) {
+        console.log(response.employeeChoice + "---HERE1"); console.log(Manager)
+        const managerObj = new Manager(response.name, response.id,
+            response.email, response.officeNumber, response.employeeChoice)
+            console.log(managerObj)
+        employeeAnswerArray.push(managerObj)
+        
+        if (managerObj.employeeChoice === "add engineer") {
+            console.log("checkpoint")
+            engineerPrompt();
+        }
+        if (managerObj.employeeChoice === "add intern") {
+            internPrompt();
+        }
+        else { sealTheDeal() }
+    })
+}
 
-                })
-                if (engineerQuestions.employeeChoice === "add engineer"){
-                    employeeAnswerArray.push(engineerQuestions)
-                    engineerPrompt();
-                }
-            }}
+function engineerPrompt() {
+    inquirer.prompt(engineerQuestions).then(response => {
+        const engObj = new Engineer(response.name, response.id,
+            response.email, response.gitHub, response.employeeChoice);
+        employeeAnswerArray.push(engObj)
+        if (engObj.employeeChoice === "add engineer") {
+            engineerPrompt();
+        }
+        if (engObj.employeeChoice === "add intern") {
+            internPrompt();
+        }
+        else { sealTheDeal() }
+    })
+}
 
-})}
+function internPrompt() {
+    inquirer.prompt(internQuestions).then(response => {
+        const internObj = new Intern(response.name, response.id,
+            response.email, response.school, response.employeeChoice);
+        employeeAnswerArray.push(internObj)
+        if (internObj.employeeChoice === "add engineer") {
+            engineerPrompt();
+        }
+        if (internObj.employeeChoice === "add intern") {
+            internPrompt();
+        }
+        else { sealTheDeal() }
+    })
+}
 
-init()
+function sealTheDeal() {
+    console.log(employeeAnswerArray)
+}
+
+init(
+    managerFunction()
+)
 
 
 
