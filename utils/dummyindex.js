@@ -1,9 +1,9 @@
 const inquirer = require("inquirer")
 const fs = require("fs");
-const Employees = require("./employees/employee.js")
-const Manager = require("./employees/manager.js");
-const Engineer = require("./employees/engineer.js");
-const Intern = require("./employees/intern.js")
+const Employees = require("../employees/employee.js")
+const Manager = require("../employees/manager.js");
+const Engineer = require("../employees/engineer.js");
+const Intern = require("../employees/intern.js")
 const util = require("util")
 
 // const next = util.promisify(managerPrompt())

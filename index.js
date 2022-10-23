@@ -1,5 +1,6 @@
 const inquirer = require("inquirer")
 const fs = require("fs");
+const getHTML = require("./utils/writeHTML")
 const Employees = require("./employees/employee.js")
 const Manager = require("./employees/manager.js");
 const Engineer = require("./employees/engineer.js");
@@ -74,7 +75,14 @@ const internQuestions = [{
     choices: ["add engineer", "add intern", "skip both and finish building my team",]
 },]
 
+const finalHTMLarray = [];
 const employeeAnswerArray = [];
+
+function sealTheDeal(html, data) {
+    console.log(employeeAnswerArray)
+    fs.writeFile(html, data, (event) => {console.log("complete.")})
+    
+}
 
 function managerPrompt() {
     inquirer.prompt(managerQuestions).then(response => {
@@ -87,7 +95,7 @@ function managerPrompt() {
         if (response.employeeChoice === "add intern") {
             internPrompt();
         }
-        else { sealTheDeal() }
+        else { sealTheDeal("index.html", getHTML(employeeAnswerArray)) }
     })
 }
 
@@ -102,24 +110,9 @@ function engineerPrompt() {
         if (response.employeeChoice === "add intern") {
             internPrompt();
         }
-        else { sealTheDeal() }
+        else { sealTheDeal("index.html", getHTML(employeeAnswerArray)) }
     })
 }
-
-// function engineerPrompt() {
-//     inquirer.prompt(engineerQuestions).then(response => {
-//         const engObj = new Engineer(response.name, response.id,
-//             response.email, response.gitHub, response.employeeChoice);
-//         employeeAnswerArray.push(engObj)
-//         if (response.employeeChoice === "add engineer") {
-//             engineerPrompt();
-//         }
-//         if (response.employeeChoice === "add intern") {
-//             internPrompt();
-//         }
-//         else { sealTheDeal() }
-//     })
-// }
 
 function internPrompt() {
     inquirer.prompt(internQuestions).then(response => {
@@ -132,32 +125,12 @@ function internPrompt() {
         if (response.employeeChoice === "add intern") {
             internPrompt();
         }
-        else { sealTheDeal() }
+        else { sealTheDeal("index.html", getHTML(employeeAnswerArray)) }
     })
-}
-
-function sealTheDeal() {
-    console.log(employeeAnswerArray)
-    console.log("time to get busy")
 }
 
 function init() {
     managerPrompt()
 }
 
-init( 
-)
-
-
-
-
-////prompts
-
-// require folders and output to html
-//make sure tests are able to be connected
-// /// make employee parent class of all other calsses
-// {
-//     name: "egineerName",
-//     message: "What is this engineer's name?",
-//     type: "input"
-// },
+init()
