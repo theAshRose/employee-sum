@@ -76,19 +76,15 @@ const internQuestions = [{
 
 const employeeAnswerArray = [];
 
-function init() {
-    inquirer.prompt(managerQuestions).then(function(response) {
-        console.log(response.employeeChoice + "---HERE1"); console.log(Manager)
+function managerPrompt() {
+    inquirer.prompt(managerQuestions).then(response => {
         const managerObj = new Manager(response.name, response.id,
             response.email, response.officeNumber, response.employeeChoice)
-            console.log(managerObj)
         employeeAnswerArray.push(managerObj)
-        
-        if (managerObj.employeeChoice === "add engineer") {
-            console.log("checkpoint")
+        if (response.employeeChoice === "add engineer") {
             engineerPrompt();
-        }
-        if (managerObj.employeeChoice === "add intern") {
+        } else
+        if (response.employeeChoice === "add intern") {
             internPrompt();
         }
         else { sealTheDeal() }
@@ -97,28 +93,43 @@ function init() {
 
 function engineerPrompt() {
     inquirer.prompt(engineerQuestions).then(response => {
-        const engObj = new Engineer(response.name, response.id,
+        const internObj = new Engineer(response.name, response.id,
             response.email, response.gitHub, response.employeeChoice);
-        employeeAnswerArray.push(engObj)
-        if (engObj.employeeChoice === "add engineer") {
+        employeeAnswerArray.push(internObj)
+        if (response.employeeChoice === "add engineer") {
             engineerPrompt();
-        }
-        if (engObj.employeeChoice === "add intern") {
+        } else
+        if (response.employeeChoice === "add intern") {
             internPrompt();
         }
         else { sealTheDeal() }
     })
 }
 
+// function engineerPrompt() {
+//     inquirer.prompt(engineerQuestions).then(response => {
+//         const engObj = new Engineer(response.name, response.id,
+//             response.email, response.gitHub, response.employeeChoice);
+//         employeeAnswerArray.push(engObj)
+//         if (response.employeeChoice === "add engineer") {
+//             engineerPrompt();
+//         }
+//         if (response.employeeChoice === "add intern") {
+//             internPrompt();
+//         }
+//         else { sealTheDeal() }
+//     })
+// }
+
 function internPrompt() {
     inquirer.prompt(internQuestions).then(response => {
         const internObj = new Intern(response.name, response.id,
             response.email, response.school, response.employeeChoice);
         employeeAnswerArray.push(internObj)
-        if (internObj.employeeChoice === "add engineer") {
+        if (response.employeeChoice === "add engineer") {
             engineerPrompt();
-        }
-        if (internObj.employeeChoice === "add intern") {
+        } else
+        if (response.employeeChoice === "add intern") {
             internPrompt();
         }
         else { sealTheDeal() }
@@ -127,10 +138,14 @@ function internPrompt() {
 
 function sealTheDeal() {
     console.log(employeeAnswerArray)
+    console.log("time to get busy")
 }
 
-init(
-    managerFunction()
+function init() {
+    managerPrompt()
+}
+
+init( 
 )
 
 
