@@ -8,6 +8,9 @@ describe("Employee", ()=>{
         expect(worker.name).toEqual("john")
         expect(worker.id).toEqual(1)
         expect(worker.email).toEqual("johndoe@gmail.com")
+        expect(worker.getName()).toEqual("john")
+        expect(worker.getID()).toEqual(1)
+        expect(worker.getEmail()).toEqual("johndoe@gmail.com")
         expect(worker.getRole()).toEqual("Employee")
     });
 })

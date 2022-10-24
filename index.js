@@ -134,3 +134,5 @@ function init() {
 }
 
 init()
+
+module.exports = init, internPrompt, engineerPrompt, managerPrompt, sealTheDeal;

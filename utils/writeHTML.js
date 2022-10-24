@@ -1,7 +1,7 @@
-const htmlArray = []
+let concatHTML;
 
 function writeHTML(data) {
-    htmlArray.push(`<head>
+  concatHTML = `<head>
     <meta charset="UTF-8">
     <title>Employee Evaluation</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
@@ -15,11 +15,21 @@ function writeHTML(data) {
     </header>
     <div class="container col-8" id="daddy" style="margin-top: 100px;">
     <div class="justify-content-center row">
-   `);
-    for (x = 0; x < data.length; x++) {
-        
+   `
+  data.forEach(function (unit) {
+    if (unit.getRole() === "Manager") {
+      concatHTML += unit.getHTML();
     }
-  
+    if (unit.getRole() === "Engineer") {
+      concatHTML += unit.getHTML();
+    }
+    if (unit.getRole() === "Intern") {
+      concatHTML += unit.getHTML();
+    }
+  })
+  concatHTML += `<footer style="min-height:200px;">
+  </footer>`
+  return concatHTML;
 }
 
 module.exports = writeHTML;
