@@ -11,7 +11,7 @@ Run our "index.js" in your own command line - as shown in this [video](https://y
 
 ## Screenshot of app result
 
-![screenshot](https://media.discordapp.net/attachments/408481106040717322/1034655242308046938/unknown.png?width=1228&height=568)
+![screenshot](https://cdn.discordapp.com/attachments/408481106040717322/1037238644085379113/unknown.png)
 
 ## the Code!
 Here we are showcasing the function which writes our index.html into existence. Specifically, we are calling on our object constructors and their methods to write the HTML. I doubt many others embedded the HTML directly from the object constructors themselves!
